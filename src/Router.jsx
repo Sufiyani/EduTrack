@@ -5,6 +5,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import AddStudentComp from "./pages/add-student";
 import AddTrainer from "./pages/add-trainer";
 import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "./components/layout/dashboard";
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route
           path="add-student"
           element={
