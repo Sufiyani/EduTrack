@@ -22,7 +22,7 @@ function ProfileMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Profile</Button>
+        <Button variant="outline">Log Out</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuItem onClick={logout}>Log out</DropdownMenuItem>

@@ -336,7 +336,7 @@ function Signup  ()  {
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   type="password"
-                  className="pl-10 h-11 border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 hover:border-gray-300"
+                 className="pl-10 h-12 border-gray-200 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 hover:border-gray-300"
                 />
               </div>
               {formik.errors.password && formik.touched.password && (
@@ -357,7 +357,7 @@ function Signup  ()  {
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
                   type="password"
-                  className="pl-10 h-11 border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 hover:border-gray-300"
+                  className="pl-10 h-12 border-gray-200 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 hover:border-gray-300"
                 />
               </div>
               {formik.errors.confirmPassword && formik.touched.confirmPassword && (
