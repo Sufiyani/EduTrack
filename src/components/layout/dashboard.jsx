@@ -111,7 +111,7 @@ export default function Dashboard({ children }) {
               </button>
               <div className="text-center">
                 <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Dashboard
+                  EduTrack
                 </h1>
               </div>
             </div>
