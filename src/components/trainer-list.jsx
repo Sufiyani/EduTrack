@@ -1,253 +1,3 @@
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
-// import {
-//   collection,
-//   deleteDoc,
-//   doc,
-//   onSnapshot,
-//   query,
-// } from "firebase/firestore";
-// import { db } from "../firebase";
-// import { useEffect, useState } from "react";
-// import { Trash } from "lucide-react";
-// import { toast } from "sonner";
-
-// function StudentList() {
-//   const [trainer, setTrainer] = useState([]);
-
-//   const init = async () => {
-//     const collectionRef = collection(db, "add-trainer");
-//     const q = query(collectionRef);
-//     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-//       const data = [];
-//       querySnapshot.forEach((doc) => {
-//         const combinedDataWithId = { ...doc.data(), id: doc?.id };
-//         data.push(combinedDataWithId);
-//       });
-//       setTrainer(data);
-//     });
-//     return unsubscribe;
-//   };
-
-//   const deleteStudent = async (id) => {
-//     try {
-//       const documentRef = doc(db, "add-trainer", id);
-//       await deleteDoc(documentRef);
-//       toast("Record has been deleted");
-//     } catch (error) {
-//       toast(error?.message);
-//     }
-//   };
-
-//   useEffect(() => {
-//     init();
-//   }, []);
-
-//   return (
-//     <Table>
-//       <TableHeader>
-//         <TableRow>
-//           <TableHead className="w-[100px]">ID</TableHead>
-//           <TableHead>Name</TableHead>
-//           <TableHead>Email</TableHead>
-//           <TableHead>Phone Number</TableHead>
-//           <TableHead>Action</TableHead>
-//         </TableRow>
-//       </TableHeader>
-//       <TableBody>
-//         {trainer.map((student) => {
-//           return (
-//             <TableRow key={student.id}>
-//               <TableCell className="font-medium">{student.id}</TableCell>
-//               <TableCell>{student.name}</TableCell>
-//               <TableCell>{student.email}</TableCell>
-//               <TableCell>{student.phone}</TableCell>
-//               <TableCell>
-//                 <Trash
-//                   size={16}
-//                   onClick={() => {
-//                     deleteStudent(student?.id);
-//                   }}
-//                 />
-//               </TableCell>
-//             </TableRow>
-//           );
-//         })}
-//       </TableBody>
-//     </Table>
-//   );
-// }
-// export default StudentList;
-
-
-
-
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
-// import {
-//   collection,
-//   deleteDoc,
-//   doc,
-//   getDoc,
-//   onSnapshot,
-//   query,
-//   setDoc,
-// } from "firebase/firestore";
-// import { db } from "../firebase";
-// import { useEffect, useState } from "react";
-// import { Trash, Check, Edit } from "lucide-react";
-// import { toast } from "sonner";
-// import EditTrainer from "./editTrainer";
-
-// function TrainerList() {
-//   const [trainers, setTrainers] = useState([]);
-//   const [editingTrainer, setEditingTrainer] = useState(null);
-//   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-//   const init = async () => {
-//     const collectionRef = collection(db, "add-trainer");
-//     const q = query(collectionRef);
-//     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-//       const data = [];
-//       querySnapshot.forEach((doc) => {
-//         const combinedDataWithId = { ...doc.data(), id: doc?.id };
-//         data.push(combinedDataWithId);
-//       });
-//       setTrainers(data);
-//     });
-//     return unsubscribe;
-//   };
-
-//   const deleteStudent = async (id) => {
-//     try {
-//       const documentRef = doc(db, "add-trainer", id);
-//       await deleteDoc(documentRef);
-//       toast("Record has been deleted");
-//     } catch (error) {
-//       toast(error?.message);
-//     }
-//   };
-
-//   const markPresent = async (trainer) => {
-//     try {
-//       const today = new Date().toDateString();
-//       const attendanceRef = doc(db, "trainer-attendance", trainer.id);
-//       const attendanceSnap = await getDoc(attendanceRef);
-
-//       if (attendanceSnap.exists()) {
-//         const existingData = attendanceSnap.data();
-//         const updatedLog = {
-//           ...existingData,
-//           [today]: true,
-//         };
-//         await setDoc(attendanceRef, updatedLog);
-//       } else {
-//         const newData = {
-//           name: trainer.name,
-//           email: trainer.email,
-//           phone: trainer.phone,
-//           [today]: true,
-//         };
-//         await setDoc(attendanceRef, newData);
-//       }
-
-//       toast(`${trainer.name} marked as present`);
-//     } catch (error) {
-//       toast("Error marking present: " + error.message);
-//     }
-//   };
-
-//   const handleEditClick = (trainer) => {
-//     setEditingTrainer(trainer);
-//     setIsEditModalOpen(true);
-//   };
-
-//   const handleEditClose = () => {
-//     setEditingTrainer(null);
-//     setIsEditModalOpen(false);
-//   };
-
-//   useEffect(() => {
-//     init();
-//   }, []);
-
-//   return (
-//     <div className="bg-white/95 dark:bg-[#0f172a] backdrop-blur-sm rounded-2xl shadow-xl border-0 p-6 hover:shadow-2xl transition-all duration-300 min-h-[calc(100vh-140px)]">
-//       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Trainer List</h2>
-
-//       <div className="overflow-x-auto">
-//         <Table>
-//           <TableHeader>
-//             <TableRow className="bg-gray-100 dark:bg-gray-800">
-//               <TableHead className="text-black dark:text-white">Name</TableHead>
-//               <TableHead className="text-black dark:text-white">Email</TableHead>
-//               <TableHead className="text-black dark:text-white">Phone Number</TableHead>
-//               <TableHead className="text-black dark:text-white">Attendance</TableHead>
-//               <TableHead className="text-black dark:text-white">Edit</TableHead>
-//               <TableHead className="text-black dark:text-white">Delete</TableHead>
-//             </TableRow>
-//           </TableHeader>
-
-//           <TableBody>
-//             {trainers.map((trainer) => (
-//               <TableRow
-//                 key={trainer.id}
-//                 className="hover:bg-blue-50 dark:hover:bg-gray-800 transition"
-//               >
-//                 <TableCell>{trainer.name}</TableCell>
-//                 <TableCell>{trainer.email}</TableCell>
-//                 <TableCell>{trainer.phone}</TableCell>
-//                 <TableCell>
-//                   <Check
-//                     size={18}
-//                     className="text-green-600 hover:text-green-700 cursor-pointer transition"
-//                     onClick={() => markPresent(trainer)}
-//                   />
-//                 </TableCell>
-//                 <TableCell>
-//                   <Edit
-//                     size={18}
-//                     className="text-blue-600 hover:text-blue-800 cursor-pointer transition"
-//                     onClick={() => handleEditClick(trainer)}
-//                   />
-//                 </TableCell>
-//                 <TableCell>
-//                   <Trash
-//                     size={18}
-//                     className="text-red-600 hover:text-red-800 cursor-pointer transition"
-//                     onClick={() => deleteStudent(trainer.id)}
-//                   />
-//                 </TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </div>
-
-//       <EditTrainer
-//         trainer={editingTrainer}
-//         isOpen={isEditModalOpen}
-//         onClose={handleEditClose}
-//       />
-//     </div>
-//   );
-// }
-
-// export default TrainerList;
-
-
 import {
   Table,
   TableBody,
@@ -264,8 +14,10 @@ import {
   onSnapshot,
   query,
   setDoc,
+  where,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth"; // Install this if not installed
+import { auth, db } from "../firebase";
 import { useEffect, useState } from "react";
 import { Trash, Check, Edit, Phone, Mail, User } from "lucide-react";
 import { toast } from "sonner";
@@ -275,10 +27,18 @@ function TrainerList() {
   const [trainers, setTrainers] = useState([]);
   const [editingTrainer, setEditingTrainer] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [user] = useAuthState(auth); // Get current logged in user
 
   const init = async () => {
+    if (!user) {
+      setTrainers([]);
+      return;
+    }
+
     const collectionRef = collection(db, "add-trainer");
-    const q = query(collectionRef);
+    // Only fetch trainers created by current user
+    const q = query(collectionRef, where("createdBy", "==", user.uid));
+    
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const data = [];
       querySnapshot.forEach((doc) => {
@@ -290,7 +50,12 @@ function TrainerList() {
     return unsubscribe;
   };
 
-  const deleteStudent = async (id) => {
+  const deleteTrainer = async (id) => {
+    if (!user) {
+      toast("Please login first");
+      return;
+    }
+
     try {
       const documentRef = doc(db, "add-trainer", id);
       await deleteDoc(documentRef);
@@ -301,9 +66,15 @@ function TrainerList() {
   };
 
   const markPresent = async (trainer) => {
+    if (!user) {
+      toast("Please login first");
+      return;
+    }
+
     try {
       const today = new Date().toDateString();
-      const attendanceRef = doc(db, "trainer-attendance", trainer.id);
+      // Use user-specific attendance collection
+      const attendanceRef = doc(db, "trainer-attendance", `${user.uid}_${trainer.id}`);
       const attendanceSnap = await getDoc(attendanceRef);
 
       if (attendanceSnap.exists()) {
@@ -318,6 +89,8 @@ function TrainerList() {
           name: trainer.name,
           email: trainer.email,
           phone: trainer.phone,
+          createdBy: user.uid, // Add user reference
+          trainerId: trainer.id,
           [today]: true,
         };
         await setDoc(attendanceRef, newData);
@@ -340,8 +113,25 @@ function TrainerList() {
   };
 
   useEffect(() => {
-    init();
-  }, []);
+    if (user) {
+      init();
+    } else {
+      setTrainers([]);
+    }
+  }, [user]);
+
+  // Show login message if user is not authenticated
+  if (!user) {
+    return (
+      <div className="bg-white/95 dark:bg-[#0f172a] backdrop-blur-sm rounded-2xl shadow-xl border-0 p-3 sm:p-4 lg:p-6 hover:shadow-2xl transition-all duration-300 min-h-[calc(100vh-140px)]">
+        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          <User size={48} className="mx-auto mb-4 opacity-50" />
+          <p className="text-lg">Please login to view trainers</p>
+          <p className="text-sm">You need to be authenticated to access this feature</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white/95 dark:bg-[#0f172a] backdrop-blur-sm rounded-2xl shadow-xl border-0 p-3 sm:p-4 lg:p-6 hover:shadow-2xl transition-all duration-300 min-h-[calc(100vh-140px)]">
@@ -407,7 +197,7 @@ function TrainerList() {
                   <Trash
                     size={18}
                     className="text-red-600 hover:text-red-800 cursor-pointer transition"
-                    onClick={() => deleteStudent(trainer.id)}
+                    onClick={() => deleteTrainer(trainer.id)}
                   />
                 </TableCell>
               </TableRow>
@@ -423,7 +213,7 @@ function TrainerList() {
             key={trainer.id}
             className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-700"
           >
-            {/* Student Name */}
+            {/* Trainer Name */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <User size={16} className="text-gray-500 dark:text-gray-400" />
@@ -447,7 +237,7 @@ function TrainerList() {
                   <Edit size={16} className="text-blue-600 dark:text-blue-400" />
                 </button>
                 <button
-                  onClick={() => deleteStudent(trainer.id)}
+                  onClick={() => deleteTrainer(trainer.id)}
                   className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
                 >
                   <Trash size={16} className="text-red-600 dark:text-red-400" />
@@ -455,7 +245,7 @@ function TrainerList() {
               </div>
             </div>
 
-            {/* Student Details */}
+            {/* Trainer Details */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Mail size={14} className="text-gray-400 dark:text-gray-500 flex-shrink-0" />
@@ -533,7 +323,7 @@ function TrainerList() {
                       <Edit size={16} className="text-blue-600 dark:text-blue-400" />
                     </button>
                     <button
-                      onClick={() => deleteStudent(trainer.id)}
+                      onClick={() => deleteTrainer(trainer.id)}
                       className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-colors"
                     >
                       <Trash size={16} className="text-red-600 dark:text-red-400" />
@@ -546,7 +336,7 @@ function TrainerList() {
         </Table>
       </div>
 
-      {/* No Students Message */}
+      {/* No Trainers Message */}
       {trainers.length === 0 && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
           <User size={48} className="mx-auto mb-4 opacity-50" />
