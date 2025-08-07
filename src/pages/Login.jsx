@@ -22,15 +22,14 @@ import {
 import useAppStore from "../store";
 import { Link, useNavigate } from "react-router-dom";
 
-// Your complete Login component with styling
+
 function Login ()  {
-  // Your existing state and imports
+
   const initialValues = {
     email: "",
     password: "",
   };
-  
-  // Your existing Yup schema (you'll need to import Yup)
+
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().required("Password is required"),
@@ -74,7 +73,6 @@ function Login ()  {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex justify-center items-center relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
@@ -168,7 +166,6 @@ function Login ()  {
             )}
           </Button>
 
-          {/* Fixed the signup link with explicit styling */}
           <div className="text-sm text-center text-gray-600">
             Don't have an account?{" "}
             <Link 

@@ -19,7 +19,7 @@ import {
   serverTimestamp,
   where,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth"; // Install this if not installed
+import { useAuthState } from "react-firebase-hooks/auth"; 
 import { auth, db } from "../firebase";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -28,7 +28,7 @@ import * as Yup from "yup";
 
 function AddStudent() {
   const [loading, setLoading] = useState(false);
-  const [user] = useAuthState(auth); // Get current logged in user
+  const [user] = useAuthState(auth); 
 
   const initialValues = {
     name: "",
@@ -55,12 +55,11 @@ function AddStudent() {
       try {
         const collectionRef = collection(db, "add-student");
         const emailToCheck = values.email.toLowerCase();
-        
-        // Check if student exists for this specific user only
+
         const q = query(
           collectionRef, 
           where("email", "==", emailToCheck),
-          where("createdBy", "==", user.uid) // Add user filter
+          where("createdBy", "==", user.uid) 
         );
         const snapshot = await getDocs(q);
 
@@ -74,8 +73,8 @@ function AddStudent() {
           name: values.name,
           email: emailToCheck,
           phone: values.phone,
-          createdBy: user.uid, // Add user ID to identify who created this student
-          createdByEmail: user.email, // Optional: for easier debugging
+          createdBy: user.uid, 
+          createdByEmail: user.email, 
           timestamp: serverTimestamp(),
         };
 

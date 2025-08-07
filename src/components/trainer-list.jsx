@@ -16,7 +16,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth"; // Install this if not installed
+import { useAuthState } from "react-firebase-hooks/auth"; 
 import { auth, db } from "../firebase";
 import { useEffect, useState } from "react";
 import { Trash, Check, Edit, Phone, Mail, User } from "lucide-react";
@@ -36,7 +36,6 @@ function TrainerList() {
     }
 
     const collectionRef = collection(db, "add-trainer");
-    // Only fetch trainers created by current user
     const q = query(collectionRef, where("createdBy", "==", user.uid));
     
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -73,7 +72,6 @@ function TrainerList() {
 
     try {
       const today = new Date().toDateString();
-      // Use user-specific attendance collection
       const attendanceRef = doc(db, "trainer-attendance", `${user.uid}_${trainer.id}`);
       const attendanceSnap = await getDoc(attendanceRef);
 
@@ -89,7 +87,7 @@ function TrainerList() {
           name: trainer.name,
           email: trainer.email,
           phone: trainer.phone,
-          createdBy: user.uid, // Add user reference
+          createdBy: user.uid, 
           trainerId: trainer.id,
           [today]: true,
         };
@@ -120,7 +118,6 @@ function TrainerList() {
     }
   }, [user]);
 
-  // Show login message if user is not authenticated
   if (!user) {
     return (
       <div className="bg-white/95 dark:bg-[#0f172a] backdrop-blur-sm rounded-2xl shadow-xl border-0 p-3 sm:p-4 lg:p-6 hover:shadow-2xl transition-all duration-300 min-h-[calc(100vh-140px)]">
@@ -221,8 +218,6 @@ function TrainerList() {
                   {trainer.name}
                 </h3>
               </div>
-              
-              {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => markPresent(trainer)}
@@ -244,8 +239,6 @@ function TrainerList() {
                 </button>
               </div>
             </div>
-
-            {/* Trainer Details */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Mail size={14} className="text-gray-400 dark:text-gray-500 flex-shrink-0" />
@@ -335,8 +328,6 @@ function TrainerList() {
           </TableBody>
         </Table>
       </div>
-
-      {/* No Trainers Message */}
       {trainers.length === 0 && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
           <User size={48} className="mx-auto mb-4 opacity-50" />

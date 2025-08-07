@@ -72,7 +72,7 @@ function EditTrainer({ trainer, isOpen, onClose }) {
         <form onSubmit={formik.handleSubmit}>
           <div className="grid gap-4 py-4">
             {["name", "email", "phone"].map((field) => (
-              <div className="grid gap-2" key={field}>
+              <div className="grid gap-2 text-sm font-medium text-gray-700" key={field}>
                 <Label htmlFor={`edit-${field}`}>
                   {field.charAt(0).toUpperCase() + field.slice(1)}
                 </Label>
@@ -82,7 +82,7 @@ function EditTrainer({ trainer, isOpen, onClose }) {
                   type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
                   value={formik.values[field]}
                   onChange={formik.handleChange}
-                  className="pl-10 h-12 border-gray-200 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 hover:border-gray-300"
+                  className="pl-4 h-12 border-gray-200 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 hover:border-gray-300"
                 />
                 {formik.errors[field] && formik.touched[field] && (
                   <span className="text-red-500 text-xs">{formik.errors[field]}</span>
@@ -92,7 +92,7 @@ function EditTrainer({ trainer, isOpen, onClose }) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline" className="rounded-md">
+              <Button variant="outline" className="rounded-md text-sm font-medium text-gray-700">
                 Cancel
               </Button>
             </DialogClose>

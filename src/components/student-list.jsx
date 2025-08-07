@@ -16,7 +16,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth"; // Install this if not installed
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import { useEffect, useState } from "react";
 import { Trash, Check, Edit, Phone, Mail, User } from "lucide-react";
@@ -27,7 +27,7 @@ function StudentList() {
   const [students, setStudents] = useState([]);
   const [editingStudent, setEditingStudent] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [user] = useAuthState(auth); // Get current logged in user
+  const [user] = useAuthState(auth); 
 
   const init = async () => {
     if (!user) {
@@ -36,7 +36,6 @@ function StudentList() {
     }
 
     const collectionRef = collection(db, "add-student");
-    // Only fetch students created by current user
     const q = query(collectionRef, where("createdBy", "==", user.uid));
     
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -73,7 +72,6 @@ function StudentList() {
 
     try {
       const today = new Date().toDateString();
-      // Use user-specific attendance collection
       const attendanceRef = doc(db, "student-attendance", `${user.uid}_${student.id}`);
       const attendanceSnap = await getDoc(attendanceRef);
 
@@ -89,7 +87,7 @@ function StudentList() {
           name: student.name,
           email: student.email,
           phone: student.phone,
-          createdBy: user.uid, // Add user reference
+          createdBy: user.uid, 
           studentId: student.id,
           [today]: true,
         };
@@ -119,8 +117,6 @@ function StudentList() {
       setStudents([]);
     }
   }, [user]);
-
-  // Show login message if user is not authenticated
   if (!user) {
     return (
       <div className="bg-white/95 dark:bg-[#0f172a] backdrop-blur-sm rounded-2xl shadow-xl border-0 p-3 sm:p-4 lg:p-6 hover:shadow-2xl transition-all duration-300 min-h-[calc(100vh-140px)]">
@@ -222,7 +218,6 @@ function StudentList() {
                 </h3>
               </div>
               
-              {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => markPresent(student)}
@@ -244,8 +239,6 @@ function StudentList() {
                 </button>
               </div>
             </div>
-
-            {/* Student Details */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Mail size={14} className="text-gray-400 dark:text-gray-500 flex-shrink-0" />
@@ -346,7 +339,7 @@ function StudentList() {
       )}
 
       <EditStudent
-        trainer={editingStudent}
+        student={editingStudent}
         isOpen={isEditModalOpen}
         onClose={handleEditClose}
       />

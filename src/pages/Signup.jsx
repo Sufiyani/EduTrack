@@ -24,7 +24,6 @@ import { UserPlus ,User,Mail,Lock} from "lucide-react";
 
 
 function Signup  ()  {
-  // Your existing state
   const [loading, setLoading] = useState(false);
   const initialValues = {
     email: "",
@@ -32,8 +31,7 @@ function Signup  ()  {
     name: "",
     confirmPassword: "",
   };
-  
-  // Your existing Yup schema
+
   const signupSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -79,12 +77,8 @@ function Signup  ()  {
     },
   });
 
-  // Mock formik for demo - replace with your real formik
- 
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex justify-center items-center relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-r from-purple-400 to-blue-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400 to-green-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
@@ -192,22 +186,29 @@ function Signup  ()  {
             </div>
           </div>
         </CardContent>
+              <CardFooter>
+            <div className="w-full">
+              <Button
+                onClick={() => {
+                  formik.submitForm();
+                }}
+                disabled={loading}
+                className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:transform-none disabled:opacity-70"
+              >
+                {loading ? "Creating Account..." : "Create Account"}
+              </Button>
 
-        <CardFooter className="flex-col gap-4">
-           <Button
-            disabled={loading}
-            onClick={formik.submitForm}
-            className="w-full"
-          >
-            {loading ? "Creating Account..." : "Create Account"}
-          </Button>
-          <p className="text-sm text-center text-gray-600">
-            Already have an account?{" "}
-            <Link to="/login" className="underline cursor-pointer">
-              Log in
-            </Link>
-          </p>
-        </CardFooter>
+              <p className="text-sm text-center text-gray-600 mt-4">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-blue-600 hover:text-blue-800 underline underline-offset-2 font-medium transition-colors duration-200 cursor-pointer"
+                >
+                  Log in
+                </Link>
+              </p>
+            </div>
+          </CardFooter>
       </Card>
     </div>
   );

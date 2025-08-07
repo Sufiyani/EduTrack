@@ -18,7 +18,6 @@ export default function Dashboard({ children }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-1000"></div>
@@ -26,7 +25,6 @@ export default function Dashboard({ children }) {
       </div>
 
       <div className="flex">
-        {/* Desktop Sidebar - Hidden on mobile/tablet */}
         <div className="hidden lg:flex fixed inset-y-0 left-0 z-50 w-64 bg-white/80 dark:bg-gray-800/90 backdrop-blur-md shadow-xl">
           <div className="flex flex-col h-full w-full">
             <div className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-3 px-4 py-6">
@@ -52,10 +50,9 @@ export default function Dashboard({ children }) {
           </div>
         </div>
 
-        {/* Mobile/Tablet Sidebar - Overlay */}
         <div className={`fixed inset-y-0 left-0 z-50 w-64 sm:w-72 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md shadow-xl transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:hidden`}>
           <div className="flex flex-col h-full">
-            {/* Mobile Header with Close Button */}
+  
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 dark:border-gray-700">
               <div className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
@@ -70,8 +67,7 @@ export default function Dashboard({ children }) {
                 <X size={20} className="text-gray-600 dark:text-gray-400" />
               </button>
             </div>
-            
-            {/* Mobile Menu Items */}
+
             <div className="px-3 py-4 space-y-2 flex-1 overflow-y-auto">
               {menuItems.map((item) => (
                 <a
@@ -90,7 +86,6 @@ export default function Dashboard({ children }) {
           </div>
         </div>
 
-        {/* Overlay for mobile sidebar */}
         {sidebarOpen && (
           <div
             className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -98,9 +93,9 @@ export default function Dashboard({ children }) {
           ></div>
         )}
 
-        {/* Main Content */}
+       
         <div className={`flex-1 flex flex-col min-w-0 ${window.innerWidth >= 1024 ? 'lg:ml-64' : ''}`}>
-          {/* Header - Responsive */}
+    
           <div className="px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center w-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-0 shadow-lg">
             <div className="flex items-center gap-2 sm:gap-4">
               <button
@@ -125,15 +120,14 @@ export default function Dashboard({ children }) {
             </div>
           </div>
 
-          {/* Content Area - Responsive */}
+         
           <div className="p-3 sm:p-4 lg:p-6 flex-1">
             <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border-0 p-4 sm:p-6 hover:shadow-2xl transition-all duration-300 min-h-[calc(100vh-120px)] sm:min-h-[calc(100vh-140px)]">
               <div className="text-gray-900 dark:text-gray-100 w-full overflow-hidden">
                 {children || (
                   <div className="space-y-4">
                     <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Welcome to Dashboard</h2>
-                  
-                    {/* Mobile-friendly welcome cards */}
+                
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                       <div className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-lg">
                         <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">Students</h3>
